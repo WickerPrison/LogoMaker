@@ -1,0 +1,20 @@
+{
+  "name": "logomaker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WickerPrison/LogoMaker.git"
+  },
+  "author": "Jacob Davis",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "inquirer": "^9.2.15"
+  }
+}
