@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const Rectangle = require('./lib/shapes.js').Rectangle;
 const Triangle = require('./lib/shapes.js').Triangle;
 const Circle = require("./lib/shapes.js").Circle;
 
@@ -42,6 +43,9 @@ inquirer
             case "Triangle":
                 triangleQuestions();
                 break;
+            case "Rectangle":
+                rectangleQuestions();
+                break;
         }
     });
 
@@ -81,6 +85,27 @@ function triangleQuestions(){
     });
 }
 
+function rectangleQuestions(){
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            message: "What should the coordinates of the top left corner of the rectangle be? Put a space between the x and y.",
+            name: "coords"
+        },
+        {
+            type: "input",
+            message: "What should the width and the height of your rectangle be? Put a space between the x and y.",
+            name: "shapeSize"
+        }
+    ])
+    .then((response) => {
+        logoData.coords = response.coords;
+        logoData.shapeSize = response.shapeSize;
+        createLogo(logoData);
+    });
+}
+
 function createLogo(data){
     const shape = chooseShape(data);
     shape.setColor(data.color);
@@ -110,6 +135,13 @@ function chooseShape(data){
             let trianglePoints = data.coords.split(" ");
             triangle.setPoints(trianglePoints);
             return triangle;
+        case "Rectangle":
+            let rectangle = new Rectangle;
+            let rectCoords = data.coords.split(" ");
+            rectangle.setPos(rectCoords[0], rectCoords[1]);
+            let rectSize = data.shapeSize.split(" ");
+            rectangle.setSize(rectSize[0], rectSize[1]);
+            return rectangle;
     }
 }
 
