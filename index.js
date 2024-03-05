@@ -13,6 +13,21 @@ inquirer
     .prompt([
         {
             type: "input",
+            message: "What text should your logo have? Max of 3 characters.",
+            name: "text"
+        },
+        {
+            type: "input",
+            message: "What color should your text be?",
+            name: "textColor"
+        },
+        {
+            type: "input",
+            message: "What size should your text be?",
+            name: "fontSize"
+        },
+        {
+            type: "input",
             message: "What width and height should your logo have? Put a space between the x and y values.",
             name: "size"
         },
@@ -33,6 +48,9 @@ inquirer
         }
     ])
     .then((response) => {
+        logoData.text = response.text;
+        logoData.textColor = response.textColor;
+        logoData.fontSize = response.fontSize;
         logoData.size = response.size;
         logoData.shape = response.shape;
         logoData.color = response.shapeColor;
@@ -111,8 +129,8 @@ function createLogo(data){
     shape.setColor(data.color);
     let size = data.size.split(" ");
     let output = `<svg version="1.1" width="${size[0]}" height="${size[1]}" xmlns="http://www.w3.org/2000/svg">
-    
     ${shape.render()}
+    ${createText(data)}
 
 </svg>`;
     fs.writeFile("logo.svg", output, function(err){
@@ -143,6 +161,13 @@ function chooseShape(data){
             rectangle.setSize(rectSize[0], rectSize[1]);
             return rectangle;
     }
+}
+
+function createText(data){
+    let size = data.size.split(" ");
+    let xPos = Number(size[0]) / 2;
+    let yPos = Number(size[1]) / 2;
+    return `<text x="${xPos}" y="${yPos}" fill="${data.textColor}" text-anchor="middle" dominant-baseline="middle" font-size="${data.fontSize}">${data.text}</text>`
 }
 
 module.exports = createLogo;
