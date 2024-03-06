@@ -18,7 +18,7 @@ inquirer
         },
         {
             type: "input",
-            message: "What color should your text be?",
+            message: "What color should your text be? Type name of color or hex number starting with #.",
             name: "textColor"
         },
         {
@@ -43,11 +43,14 @@ inquirer
         },
         {
             type: "input",
-            message: "What color should the shape be?",
+            message: "What color should the shape be? Type name of color or hex number starting with #.",
             name: "shapeColor"
         }
     ])
     .then((response) => {
+        if(response.text.length > 3){
+            response.text = response.text.substring(0, 3);
+        }
         logoData.text = response.text;
         logoData.textColor = response.textColor;
         logoData.fontSize = response.fontSize;
@@ -66,6 +69,7 @@ inquirer
                 break;
         }
     });
+
 
 function circleQuestions(){
     inquirer
